@@ -3,7 +3,7 @@ title: "SceneKit"
 date: 2020-08-14
 draft: false
 description: "All the configuration variables available in Blowfish."
-slug: "configuration"
+slug: "SceneKit"
 
 ---
 

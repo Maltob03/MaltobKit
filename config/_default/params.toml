@@ -17,7 +17,7 @@ mainSections = ["docs"]
 
 disableImageOptimization = false
 
-defaultBackgroundImage = "/img/hello.png"
+defaultBackgroundImage = "/img/bgw.png"
 
 [header]
   layout = "basic" # valid options: basic, fixed
@@ -32,7 +32,7 @@ defaultBackgroundImage = "/img/hello.png"
 [homepage]
 
   layout = "background" # valid options: page, profile, hero, card, background, custom
-  homepageImage = "/img/hello.png" # used in: hero, and card
+  homepageImage = "/img/bgw.png" # used in: hero, and card
   showRecent = true
   showRecentItems = 10
   showMoreLink = true

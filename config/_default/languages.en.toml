@@ -15,6 +15,6 @@ dateFormat = "2 January 2006"
 [author]
   name = "MaltobKit"
   image = "img/logo.png"
-  headline = "Learn about the Apple Frameworks and how to implement them in yours project"
+  headline = "Learn about the Apple Frameworks and how to implement them in yours project <br> Passion can change society"
   bio = "A powerful, lightweight theme for Hugo built with Tailwind CSS."
 

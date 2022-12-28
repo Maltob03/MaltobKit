@@ -11,9 +11,6 @@ slug: "SceneKit"
 
 SceneKit is a framework for swift that perform 3D rendering inside your app.
 
-
-CAN YOU SEE ME
-
 > SceneKit combines a high-performance rendering engine with a descriptive API for import, manipulation, and rendering of 3D assets. Unlike lower-level APIs such as Metal and OpenGL that require you to implement in precise detail the rendering algorithms that display a scene, SceneKit requires only descriptions of your scene’s contents and the actions or animations you want it to perform.
 
 So what we need to implement SceneKit in our project is basically a 3D model that we want to display inside our app and that's it!

@@ -12,7 +12,7 @@
 
 [[main]]
   name = "Articles"
-  pageRef = "docs"
+  pageRef = "/docs"
   weight = 10
 
 [[main]]

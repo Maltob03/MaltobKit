@@ -104,7 +104,7 @@ struct PasswordManagerApp: App {
     var body: some Scene {
         WindowGroup {
             MainView().environment(\.managedObjectContext,
-                                                  persistenceController.container.viewContext)
+                        persistenceController.container.viewContext)
         }
     }
 }
@@ -138,22 +138,17 @@ struct ListView: View {
             List {
                 ForEach(accounts) { account in
                     NavigationLink {
-                        DetailsView(accountName: account.name!, email: account.mail!, password: account.pass!, sharedKey: account.key!)
+                        Text(account.name!)
                         
                     } label: {
-                        HStack {
-                            Text(account.name ?? "Not found").padding().bold()
-                            VStack{
-                                Text(account.mail ?? "Not found").fixedSize(horizontal: false, vertical: true).font(.system(size:15))
-                                Text(hash(password: account.pass!)).font(.system(size:15))
-                            }
-                            }
-                        }.frame(height: 100)
+                        Text(account.name!)
+                        }
                     
                 }.onDelete(perform: deleteProducts)
             }.navigationTitle("Order List")
                 
         }
+    }
     }
 ```
 
@@ -182,17 +177,11 @@ var body: some View {
             List {
                 ForEach(accounts) { account in
                     NavigationLink {
-                        DetailsView(accountName: account.name!, email: account.mail!, password: account.pass!, sharedKey: account.key!)
+                        Text(account.name!)
                         
                     } label: {
-                        HStack {
-                            Text(account.name ?? "Not found").padding().bold()
-                            VStack{
-                                Text(account.mail ?? "Not found").fixedSize(horizontal: false, vertical: true).font(.system(size:15))
-                                Text(hash(password: account.pass!)).font(.system(size:15))
-                            }
-                            }
-                        }.frame(height: 100)
+                        Text(account.name!)
+                        }
                     
                 }.onDelete(perform: deleteProducts)
             }.navigationTitle("Order List")
@@ -297,7 +286,15 @@ struct PasswordManagerApp: App {
 ### The view that display all the item
 
 ```
+//
+//  ListView.swift
+//  PasswordManager
+//
+//  Created by Matteo Altobello on 13/12/22.
+//
+
 import SwiftUI
+import CryptoKit
 
 struct ListView: View {
     
@@ -314,40 +311,16 @@ struct ListView: View {
             List {
                 ForEach(accounts) { account in
                     NavigationLink {
-                        DetailsView(accountName: account.name!, email: account.mail!, password: account.pass!, sharedKey: account.key!)
+                        Text(account.name!)
                         
                     } label: {
-                        HStack {
-                            Text(account.name ?? "Not found").padding().bold()
-                            VStack{
-                                Text(account.mail ?? "Not found").fixedSize(horizontal: false, vertical: true).font(.system(size:15))
-                                Text(hash(password: account.pass!)).font(.system(size:15))
-                            }
-                            }
-                        }.frame(height: 100)
+                        Text(account.name!)
+                        }
                     
                 }.onDelete(perform: deleteProducts)
             }.navigationTitle("Order List")
                 
         }
-    }
-
-    private func addProduct() {
-            
-            withAnimation {
-                let account = Account(context: viewContext)
-                account.name = name
-                account.mail = quantity
-                account.pass = pass
-                saveContext()
-            }
-        }
-    
-    private func deleteProducts(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { accounts[$0] }.forEach(viewContext.delete)
-                saveContext()
-            }
     }
     
     private func saveContext() {
@@ -360,7 +333,12 @@ struct ListView: View {
     }
     
     
-    
+    private func deleteProducts(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { accounts[$0] }.forEach(viewContext.delete)
+                saveContext()
+            }
+    }
     
     
 }
@@ -370,4 +348,5 @@ struct ListView_Previews: PreviewProvider {
         ListView()
     }
 }
+
 ```

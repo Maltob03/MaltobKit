@@ -30,7 +30,7 @@ import CoreData
 
 ## The Controller
 
-So in order to work with our stored data we need a controller that work as a bridge between CoreData and our personal data structure.
+In order to work with our stored data we need a controller that work as a bridge between CoreData and our personal data structure. So in the file that you have created:
 
 
 
@@ -73,7 +73,7 @@ In the DataModel file we define an **entity** of the real world that could be an
 
 **The entity account has as attributes Account_Name, mail, password for example**
 
-So imagine that an user could have more than account, how these will be stored.
+So imagine that an user could have more than one account, how these will be stored ?
 
 
 Account_Name | Mail | Password |
@@ -85,158 +85,289 @@ Microsoft | mail@domain.com| Secret |
 
 So it works like a numbers file with rows and column
 
+Now create a new DataModel file in your project, declare the entities and add attributes like this:
+
+![Alt text](DataModel.png "The DataModel file")
 
 
+## Conncect the database with the View
 
-## Create the SceneKit View
+Now that we have the structure of the database the new step is to pass the structure from the DataModel file to the view. So in the main file we have to add few line of code:
 
-First of all we need to import the framework in the file that we have created before, like this:
 
 ```
-Import SceneKit
+import SwiftUI
 
-```
-
-Now we have to create the structure for this view that will render our fantastic 3D model. SceneKit is a framework that works with the old UIKit so if you have always see only SwiftUI component it could look a little bit different, but let's see:
-
-```
-struct CustomSceneView: UIViewRepresentable {
-     ...
-}
-
-```
-
-
-As you can see it looks different from the classical:
-
-```
-struct ContentView: View{
-    var body: some View{
-        ...
+@main
+struct PasswordManagerApp: App {
+    let persistenceController = PersistenceController.shared
+    var body: some Scene {
+        WindowGroup {
+            MainView().environment(\.managedObjectContext,
+                                                  persistenceController.container.viewContext)
+        }
     }
 }
-```
-
-And for this reason we need to delete the preview from the SceneKit file.
-
-## The scene variable
-
-After we have created the struct we need to declare a variable binding.
 
 ```
-struct CustomSceneView: UIViewRepresentable {
-     @Binding var scene: SCNScene?
-}
-```
 
-Ok now we have to discuss a lot about this single line of code.
+As you can see we declare the controller that we have build before and with the dot modifier is possible to connect the Controller to the View
 
-1. The "@Binding" it's a way to connect to another variable **scene** that is declared into another view.
-2. The ? means an optional SCNScene object so the variable will either have a value or no value. Since no value is assigned to the variable this means that is nil.
-3. As we said before SCNScene it's the type of object that will help us to render our 3D models
+## Import the database into SwiftUI file
 
+Imagine that we want to display all our entities into a list, so we need a view that is connected to the database and display all the items. First see the code and then try to understend how it works:
 
-
-
-
-
-## Make things happen!
-
-Now that we have our var scene we need to tell to swift how to show this var and what specifc it has so let's look the code
 
 ```
-func makeUIView(context: Context) -> SCNView {
-        let view = SCNView()
-        view.allowsCameraControl = true
-        view.autoenablesDefaultLighting = true
-        view.antialiasingMode = .multisampling2X
-        view.scene = scene
-        view.backgroundColor = .clear
-        return view
+import SwiftUI
+
+struct ListView: View {
+    
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(entity: Account.entity(), sortDescriptors: [])
+
+    var accounts: FetchedResults<Account>
+
+    @State var showDetails = false
+    
+    
+    var body: some View {
+        NavigationView{
+            List {
+                ForEach(accounts) { account in
+                    NavigationLink {
+                        DetailsView(accountName: account.name!, email: account.mail!, password: account.pass!, sharedKey: account.key!)
+                        
+                    } label: {
+                        HStack {
+                            Text(account.name ?? "Not found").padding().bold()
+                            VStack{
+                                Text(account.mail ?? "Not found").fixedSize(horizontal: false, vertical: true).font(.system(size:15))
+                                Text(hash(password: account.pass!)).font(.system(size:15))
+                            }
+                            }
+                        }.frame(height: 100)
+                    
+                }.onDelete(perform: deleteProducts)
+            }.navigationTitle("Order List")
+                
+        }
     }
 ```
 
-Try to analyze what this function does:
+So as you can see in the first lines of code there are some important statement:
 
-1. It returns a SCNView value
-2. Declare a constant "view" that will be a SCNView() object
-3. To this object we need to add some specific like cameraControl and other Stuff
-4. The most important: to this view constant (that remember is a SCNView object) we say what scene it has to display
+```
+1 @Environment(\.managedObjectContext) private var viewContext
+2 @FetchRequest(entity: Account.entity(), sortDescriptors: [])
+3 var accounts: FetchedResults<Account>
+```
+
+So in the line number 1 with @Enviroment if the value changes, SwiftUI updates any parts of your view that depend on the value.
+
+The FetchRequest property wrapper is used to declare a FetchedResults property that provides a collection of Core Data managed objects to a SwiftUI view.
+
+In the accounts variable we put the FetchRequest
+
+
+## Display the entities
+
+So now that we have all the object linked we can display our entities into a visual list:
+
+```
+var body: some View {
+        NavigationView{
+            List {
+                ForEach(accounts) { account in
+                    NavigationLink {
+                        DetailsView(accountName: account.name!, email: account.mail!, password: account.pass!, sharedKey: account.key!)
+                        
+                    } label: {
+                        HStack {
+                            Text(account.name ?? "Not found").padding().bold()
+                            VStack{
+                                Text(account.mail ?? "Not found").fixedSize(horizontal: false, vertical: true).font(.system(size:15))
+                                Text(hash(password: account.pass!)).font(.system(size:15))
+                            }
+                            }
+                        }.frame(height: 100)
+                    
+                }.onDelete(perform: deleteProducts)
+            }.navigationTitle("Order List")
+                
+        }
+    }
+```
+
+In this case we have into the list some other stuff like a navigation view ecc... But the logic is the same.
+
+## Work with the database
+
+Is the moment to add data to store in our database but also delete some item. How??
+We need some function:
+
+```
+private func addProduct() {
+            
+            withAnimation {
+                let account = Account(context: viewContext)
+                account.name = name
+                account.mail = quantity
+                account.pass = pass
+                saveContext()
+            }
+        }
+        
+        private func saveContext() {
+            do {
+                try viewContext.save()
+            } catch {
+                let error = error as NSError
+                fatalError("An error occured: \(error)")
+            }
+        }
+
+
+ private func deleteProducts(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { accounts[$0] }.forEach(viewContext.delete)
+                saveContext()
+            }
+    }
+```
+
+## Conclusion
+
+I think that this is what you have to know to start a project using CoreData. Remember this is a basic implementation with a single entity, but there are a lot of stuff that you can do like conncet entities between ecc...
+
+The answer to the question "How can I go deep into this things" is one:
+
+**Try, make errors, fix it and iterate 😎**
 
 
 ## Summary
 
-In order to be sure that all this information are clear enough i want to make a little discorsive summary without code:
-
-Remember our goal is to render a 3D model inside our app
-
-So think about a film projector, It has the projector itself and the film reel.
-
-The struct that we have defined is the projector.
-The @Binding var is the place where the film reel goes and the function is how the projector works
-
-And the film reel ?
-The film reel is another view where we define our model and we call the film projector to work
-
-So this is how your file would look:
+### Persistence file
 
 ```
-import SwiftUI
-import SceneKit
+import Foundation
 
-struct CustomSceneView: UIViewRepresentable {
+import CoreData
+
+struct PersistenceController {
+    static let shared = PersistenceController()
     
-    @Binding var scene: SCNScene?
-    
-    func makeUIView(context: Context) -> SCNView {
-        let view = SCNView()
-        view.allowsCameraControl = true
-        view.autoenablesDefaultLighting = true
-        view.antialiasingMode = .multisampling2X
-        view.scene = scene
-        view.backgroundColor = .clear
-        return view
-    }
-    
-    func updateUIView(_ uiView: SCNView, context: Context) {
-    }
-}
-
-struct CustomSceneView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-```
-
-## The last steps
-
-So now we can use the struct that we have defined into a swiftUI file.
-
-What we need is to declare a @State var of type scene
-
-
-
-```
-import SwiftUI
-import SceneKit
-
-
-struct Home: View {
-    @State var scene: SCNScene? = .init(named: "name_of_your_model.scn")
-    var body: some View {
-        VStack{
-            CustomSceneView(scene: $scene)
-                . frame (height: 350)
-                .padding ()
+    let container: NSPersistentContainer
+    init() {
+        container = NSPersistentContainer(name: "Accounts")
+        
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Container load failed: \(error)")
+            }
         }
     }
 }
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+
+```
+### DataModel file
+
+![Alt text](DataModel.png)
+
+### Your_Project_NameApp
+
+```
+import SwiftUI
+
+@main
+struct PasswordManagerApp: App {
+    let persistenceController = PersistenceController.shared
+    var body: some Scene {
+        WindowGroup {
+            MainView() .environment(\.managedObjectContext,
+                                                  persistenceController.container.viewContext)
+        }
     }
-    
 }
+
 ```
 
+### The view that display all the item
+
+```
+import SwiftUI
+
+struct ListView: View {
+    
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(entity: Account.entity(), sortDescriptors: [])
+    var accounts: FetchedResults<Account>
+    @State var showDetails = false
+    
+    
+    var body: some View {
+        NavigationView{
+            List {
+                ForEach(accounts) { account in
+                    NavigationLink {
+                        DetailsView(accountName: account.name!, email: account.mail!, password: account.pass!, sharedKey: account.key!)
+                        
+                    } label: {
+                        HStack {
+                            Text(account.name ?? "Not found").padding().bold()
+                            VStack{
+                                Text(account.mail ?? "Not found").fixedSize(horizontal: false, vertical: true).font(.system(size:15))
+                                Text(hash(password: account.pass!)).font(.system(size:15))
+                            }
+                            }
+                        }.frame(height: 100)
+                    
+                }.onDelete(perform: deleteProducts)
+            }.navigationTitle("Order List")
+                
+        }
+    }
+
+    private func addProduct() {
+            
+            withAnimation {
+                let account = Account(context: viewContext)
+                account.name = name
+                account.mail = quantity
+                account.pass = pass
+                saveContext()
+            }
+        }
+    
+    private func deleteProducts(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { accounts[$0] }.forEach(viewContext.delete)
+                saveContext()
+            }
+    }
+    
+    private func saveContext() {
+        do {
+            try viewContext.save()
+        } catch {
+            let error = error as NSError
+            fatalError("An error occured: \(error)")
+        }
+    }
+    
+    
+    
+    
+    
+}
+
+struct ListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ListView()
+    }
+}
+```

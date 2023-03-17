@@ -1,5 +1,5 @@
 ---
-title: "FaceID"
+title: "How to implement FaceID"
 date: 2020-08-14
 draft: false
 description: "All the configuration variables available in Blowfish."
@@ -16,7 +16,7 @@ In order to perform an authentication using FaceID you can use the LocalAuthenti
 
 The first thing that you have to do is import the LocalAuthentication framework as:
 
-```
+```swift
 import LocalAutentication
 ```
 
@@ -24,7 +24,7 @@ import LocalAutentication
 
 In your view you have to declare a boolean variable in this way
 
-```
+```swift
  @State private var isUnlocked = false
 ```
 
@@ -34,7 +34,7 @@ The state wrapper allow the variable to change his value when the view is esecut
 
 We have to display two view item, one when the authentication doesn't confirm the user and another one when the authenticaiton works, like this:
 
-```
+```swift
 VStack{
         if isUnlocked {
             ZStack{
@@ -51,7 +51,7 @@ as you can see there is **.onAppear(perform: authenticate)**
 
 This mean that when the view is loaded the first thing that is done is function **authenticate** that we define like this:
 
-```
+```swift
 func authenticate() {
         let context = LAContext()
         var error: NSError?

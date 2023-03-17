@@ -1,5 +1,5 @@
 ---
-title: "CoreData"
+title: "Introduction to CoreData"
 date: 2020-08-14
 draft: false
 description: "All the configuration variables available in Blowfish."
@@ -24,7 +24,7 @@ For this project we need different type of swift file, but we will see this and 
 Open a new swift file (not swiftUI be careful), you can name it as you want. I called main **Persistance**
 As usual the first step when we use a certain framework is import the library.
 
-```
+```swift
 import CoreData
 ```
 
@@ -34,7 +34,7 @@ In order to work with our stored data we need a controller that work as a bridge
 
 
 
-```
+```swift
 import Foundation
 
 import CoreData
@@ -95,7 +95,7 @@ Now create a new DataModel file in your project, declare the entities and add at
 Now that we have the structure of the database the new step is to pass the structure from the DataModel file to the view. So in the main file we have to add few line of code:
 
 
-```
+```swift
 import SwiftUI
 
 @main
@@ -118,7 +118,7 @@ As you can see we declare the controller that we have build before and with the 
 Imagine that we want to display all our entities into a list, so we need a view that is connected to the database and display all the items. First see the code and then try to understend how it works:
 
 
-```
+```swift
 import SwiftUI
 
 struct ListView: View {
@@ -154,7 +154,7 @@ struct ListView: View {
 
 So as you can see in the first lines of code there are some important statement:
 
-```
+```swift
 1 @Environment(\.managedObjectContext) private var viewContext
 2 @FetchRequest(entity: Account.entity(), sortDescriptors: [])
 3 var accounts: FetchedResults<Account>
@@ -171,7 +171,7 @@ In the accounts variable we put the FetchRequest
 
 So now that we have all the object linked we can display our entities into a visual list:
 
-```
+```swift
 var body: some View {
         NavigationView{
             List {
@@ -197,7 +197,7 @@ In this case we have into the list some other stuff like a navigation view ecc..
 Is the moment to add data to store in our database but also delete some item. How??
 We need some function:
 
-```
+```swift
 private func addProduct() {
             
             withAnimation {
@@ -240,7 +240,7 @@ The answer to the question "How can I go deep into this things" is one:
 
 ### Persistence file
 
-```
+```swift
 import Foundation
 
 import CoreData
@@ -267,7 +267,7 @@ struct PersistenceController {
 
 ### Your_Project_NameApp
 
-```
+```swift
 import SwiftUI
 
 @main
@@ -285,7 +285,7 @@ struct PasswordManagerApp: App {
 
 ### The view that display all the item
 
-```
+```swift
 //
 //  ListView.swift
 //  PasswordManager

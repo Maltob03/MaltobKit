@@ -9,28 +9,25 @@ slug: "SceneKitT"
 
 ## What is SceneKit?
 
-SceneKit is a framework for swift that perform 3D rendering inside your app.
+SceneKit is a powerful framework for rendering 3D graphics in Swift apps. In this tutorial, we'll guide you through the process of integrating SceneKit into your SwiftUI project. Let's get started!
+
 
 > SceneKit combines a high-performance rendering engine with a descriptive API for import, manipulation, and rendering of 3D assets. Unlike lower-level APIs such as Metal and OpenGL that require you to implement in precise detail the rendering algorithms that display a scene, SceneKit requires only descriptions of your scene’s contents and the actions or animations you want it to perform.
 
 So what we need to implement SceneKit in our project is basically a 3D model that we want to display inside our app and that's it!
 
-There will be a complete article on how to import a custom 3D model inside our project, but for now let's assume that we already have the model in our project.
+## Creating the SceneKit View
 
-## New SwiftUI file
+First, create a new SwiftUI file. You can name it whatever you like; for this tutorial, we'll name it "CustomSceneView".
 
-Add new SwiftUI file, name it as you want, I called mine CustomSceneView
-
-## Create the SceneKit View
-
-First of all we need to import the framework in the file that we have created before, like this:
+Now, import the SceneKit framework into the file:
 
 ```swift
 Import SceneKit
 
 ```
 
-Now we have to create the structure for this view that will render our fantastic 3D model. SceneKit is a framework that works with the old UIKit so if you have always see only SwiftUI component it could look a little bit different, but let's see:
+Next, define the structure for the SceneKit view using the UIViewRepresentable protocol:
 
 ```swift
 struct CustomSceneView: UIViewRepresentable {
@@ -49,11 +46,10 @@ struct ContentView: View{
 }
 ```
 
-And for this reason we need to delete the preview from the SceneKit file.
 
 ## The scene variable
 
-After we have created the struct we need to declare a variable binding.
+Within the CustomSceneView structure, declare a @Binding variable for the scene:
 
 ```swift
 struct CustomSceneView: UIViewRepresentable {
@@ -61,20 +57,20 @@ struct CustomSceneView: UIViewRepresentable {
 }
 ```
 
-Ok now we have to discuss a lot about this single line of code.
+Let's discuss this line of code:
 
-1. The "@Binding" it's a way to connect to another variable **scene** that is declared into another view.
-2. The ? means an optional SCNScene object so the variable will either have a value or no value. Since no value is assigned to the variable this means that is nil.
-3. As we said before SCNScene it's the type of object that will help us to render our 3D models
-
-
+1. @Binding establishes a connection to another variable called scene, which is declared in another view.
+2. The ? indicates an optional SCNScene object, which means the variable can either have a value or be nil.
+3. As mentioned earlier, SCNScene is the type of object that helps us render 3D models.
 
 
 
 
-## Make things happen!
 
-Now that we have our var scene we need to tell to swift how to show this var and what specifc it has so let's look the code
+
+## Configuring the SceneKit View
+
+Now, let's make things happen! We'll define the makeUIView function to configure our SceneKit view:
 
 ```swift
 func makeUIView(context: Context) -> SCNView {
@@ -88,29 +84,20 @@ func makeUIView(context: Context) -> SCNView {
     }
 ```
 
-Try to analyze what this function does:
+Let's analyze what this function does:
 
-1. It returns a SCNView value
-2. Declare a constant "view" that will be a SCNView() object
-3. To this object we need to add some specific like cameraControl and other Stuff
-4. The most important: to this view constant (that remember is a SCNView object) we say what scene it has to display
+1. It returns a SCNView object
+2. We create a constant called view, which is an instance of SCNView().
+3. We configure the view by enabling camera control, enabling default lighting, setting the antialiasing mode, assigning the scene variable to the view's scene property, and setting the background color to clear.
 
 
 ## Summary
 
-In order to be sure that all this information are clear enough i want to make a little discorsive summary without code:
+To summarize the concepts covered so far, let's use an analogy: think of a film projector with a projector itself and a film reel.
 
-Remember our goal is to render a 3D model inside our app
+In this case, our CustomSceneView structure is the projector. The @Binding variable represents the film reel, and the makeUIView function defines how the projector works.
 
-So think about a film projector, It has the projector itself and the film reel.
-
-The struct that we have defined is the projector.
-The @Binding var is the place where the film reel goes and the function is how the projector works
-
-And the film reel ?
-The film reel is another view where we define our model and we call the film projector to work
-
-So this is how your file would look:
+Now, your file should look like this:
 
 ```swift
 import SwiftUI
@@ -143,9 +130,9 @@ struct CustomSceneView_Previews: PreviewProvider {
 
 ## The last steps
 
-So now we can use the struct that we have defined into a swiftUI file.
+Now, let's use the CustomSceneView structure in a SwiftUI file.
 
-What we need is to declare a @State var of type scene
+Declare a @State variable of type scene:
 
 
 
@@ -172,3 +159,9 @@ struct Home_Previews: PreviewProvider {
 }
 ```
 
+
+## Conclusion
+
+Congratulations! You've successfully integrated SceneKit into your SwiftUI project. We covered the basic steps for rendering a 3D model in your app using SceneKit. Feel free to explore further and enhance your project with SceneKit's powerful capabilities.
+
+Remember, SceneKit provides a versatile and user-friendly way to incorporate 3D graphics into your apps, and SwiftUI simplifies the process of building user interfaces. Combine them effectively to create amazing experiences!

@@ -9,28 +9,23 @@ slug: "PDF Gen"
 
 ## Why we need to convert a SwiftUI view into PDF?
 
-I was working on one of my project that basically generate something like a book page. One feature that i want to implement was to share this page but how?
-
-I tried with swiftUI sharelink but i was able to share the string and not a well formatted document. So i need something that allow me to generate a PDF.
+While working on one of my projects that involved generating content resembling a book page, I came across a requirement to share this page. But I faced a challenge: How could I share the content as a well-formatted document instead of just a string? I needed a solution that would allow me to generate a PDF.
 
 
 ## What you need to implement
 
-You are very lucky cause to implement this feature i made a lot of research and seems that no one has what i need... Until i found a great git repository !!
-
-This repository contain a perfect extension for a swiftui view that works perfectly.
+Fortunately, after conducting extensive research, I stumbled upon a fantastic GitHub repository that had exactly what I was looking for: a perfect extension for SwiftUI views.
 
 
 ## Extension 
 
-An extension allow you to add methods to existing types, in this case View typoe, to make them do things they weren’t originally designed to do. So a best practice when you implement some extension is to create a folder called Extension in your XCode project. In this folder you will add some necessary files.
+Extensions in Swift allow you to add methods to existing types, such as the View type in this case, to make them do things they weren't originally designed to do. When implementing an extension, it's a best practice to create a folder called "Extension" in your Xcode project and place the necessary files inside it.
 
 
 
 ## Time to work
 
-Let's start creating a new swift file in the Extension folder, i called mine exportPDF.
-Inside this file you can paste this code:
+Let's start by creating a new Swift file in the Extension folder. I named mine ExportPDF.swift. Inside this file, you can paste the following code:
 
 ```swift
 import SwiftUI
@@ -154,7 +149,7 @@ extension View{
 
 ## Share 
 
-With the extension above we can generate the PDF but you need to create another file in order to share the document. Create a new file, i call mine sharePDF and paste into this file the next lines of code:
+With the above extension, we can generate a PDF. However, we need to create another file to handle the sharing of the document. Create a new file, I called mine SharePDF.swift, and paste the following code:
 
 ````swift
 import Foundation
@@ -193,8 +188,7 @@ public extension UIApplication {
 
 ## Use the extension in a view
 
-The last part is to use what you have created in the view that you want to convert and share.
-What you need to to is to add a button to share the content. Look at this:
+The last step is to utilize what we have created in the view that you want to convert and share. To achieve this, add a button that triggers the sharing action. Here's an example:
 
 ```swift
 Button {
@@ -207,6 +201,5 @@ Button {
 
 ## Conclusion
 
-With this type of implmenetation you will able to generate PDF of your views and share it with basically one tap.
+With this implementation, you will be able to generate PDFs of your views and share them with just one tap. If you encounter any issues with the provided code, you can refer to the repository [link](https://github.com/Noice-Anas/PDF-creator-SwiftUI.git) I found, which inspired this solution.
 
-This is the [link](https://github.com/Noice-Anas/PDF-creator-SwiftUI.git) of the repository that i found if you have some problems with the code above

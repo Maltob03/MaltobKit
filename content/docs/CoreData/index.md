@@ -7,6 +7,9 @@ slug: "CoreData"
 
 ---
 
+##Introduction
+
+CoreData is a fundamental framework that provides data persistence in your app. It may initially seem complicated, but understanding how it works can make it clearer. In this article, we will explore the basic steps of working with CoreData in Swift.
 
 ## What is CoreData
 
@@ -36,7 +39,6 @@ In order to work with our stored data we need a controller that work as a bridge
 
 ```swift
 import Foundation
-
 import CoreData
 
 struct PersistenceController {
@@ -65,11 +67,11 @@ Let's see what is this "Controller"
 
 ## The DataModel file
 
-Inside the DataModel file we define the structure of the database. In other words how the data will be stored inside the database
+The Data Model file defines the structure of the database, including how data will be stored. In this file, you define entities (representing real-world objects) and their attributes.
 
-Now if you never work with a database it's a little bit complex to work with data flow.
+Create a new Data Model file in your project and declare entities with attributes. For example, an entity called "Account" with attributes such as "Account_Name," "Mail," and "Password."
 
-In the DataModel file we define an **entity** of the real world that could be an **Account** as for the example. Now we have to imagine what charaterize the entiy so its **attributes**.
+Refer to the following diagram for an example of the Data Model structure:
 
 **The entity account has as attributes Account_Name, mail, password for example**
 
@@ -92,7 +94,7 @@ Now create a new DataModel file in your project, declare the entities and add at
 
 ## Conncect the database with the View
 
-Now that we have the structure of the database the new step is to pass the structure from the DataModel file to the view. So in the main file we have to add few line of code:
+To connect the database structure defined in the Data Model file to the view, we need to make a few modifications in the main file:
 
 
 ```swift
@@ -111,12 +113,11 @@ struct PasswordManagerApp: App {
 
 ```
 
-As you can see we declare the controller that we have build before and with the dot modifier is possible to connect the Controller to the View
+In the code above, we declare the persistenceController and connect it to the view using the .environment modifier.
 
 ## Import the database into SwiftUI file
 
-Imagine that we want to display all our entities into a list, so we need a view that is connected to the database and display all the items. First see the code and then try to understend how it works:
-
+Suppose we want to display the entities in a list. We need a view connected to the database that can fetch and display the items. Consider the following code:
 
 ```swift
 import SwiftUI
@@ -160,11 +161,11 @@ So as you can see in the first lines of code there are some important statement:
 3 var accounts: FetchedResults<Account>
 ```
 
-So in the line number 1 with @Enviroment if the value changes, SwiftUI updates any parts of your view that depend on the value.
+The @Environment property wrapper automatically updates any parts of the view that depend on the managed object context.
 
-The FetchRequest property wrapper is used to declare a FetchedResults property that provides a collection of Core Data managed objects to a SwiftUI view.
+The @FetchRequest property wrapper declares a FetchedResults property, providing a collection of CoreData managed objects to the SwiftUI view.
 
-In the accounts variable we put the FetchRequest
+The ListView view displays the fetched accounts in a list, and the deleteAccounts function allows deleting items.
 
 
 ## Display the entities
@@ -194,8 +195,7 @@ In this case we have into the list some other stuff like a navigation view ecc..
 
 ## Work with the database
 
-Is the moment to add data to store in our database but also delete some item. How??
-We need some function:
+To add and delete data from the database, we need some helper functions:
 
 ```swift
 private func addProduct() {
@@ -229,14 +229,12 @@ private func addProduct() {
 
 ## Conclusion
 
-I think that this is what you have to know to start a project using CoreData. Remember this is a basic implementation with a single entity, but there are a lot of stuff that you can do like conncet entities between ecc...
-
-The answer to the question "How can I go deep into this things" is one:
-
-**Try, make errors, fix it and iterate 😎**
+This article has provided a basic introduction to working with CoreData in Swift. While we covered the essential steps for a single entity, CoreData offers more advanced features and entity relationships to explore. **Remember, the best way to learn is to try, make mistakes, fix them, and iterate.**
 
 
 ## Summary
+
+Below is a summary of the important code snippets and files discussed:
 
 ### Persistence file
 
@@ -350,3 +348,7 @@ struct ListView_Previews: PreviewProvider {
 }
 
 ```
+
+
+
+

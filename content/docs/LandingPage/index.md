@@ -7,25 +7,31 @@ slug: "LandingPage"
 
 ---
 
-## Simple website for your app
+## Simple Website for Your App
 
-Ok you have published your beautifull app on the App Store or maybe you are thinking to publish your app after a TestFlight period. Maybe you need a place for your privacy and policy document, or a place where you can track all the changelogs. A website is the perfect solution
+Ok, you have published your beautiful app on the App Store, or maybe you are thinking of publishing your app after a TestFlight period. Perhaps you need a place for your privacy and policy documents or a space to track all the changelogs. A website is the perfect solution.
 
-## What you need
+### What You Need
 
-In order to make things easier as possible, we will use the potentiality of github pages, a service that will host our website with also a domain. So make sure you have a github account and a little expirience with git
+To make things as easy as possible, we will use the potential of GitHub Pages, a service that hosts websites with a domain. So make sure you have a GitHub account and a little experience with Git.
 
+### How It Works
 
-## How it works
+This is a static website built with the Jekyll framework. Jekyll builds a static website, and users can apply a theme or template without having to code anything. For this project, we will use an existing template. You can find it in this [repository](https://github.com/emilbaehr/automatic-app-landing-page.git).
 
-This is a static website built with the Jekyll framework. So what jekyll does is basically build a static website and the user can apply a theme or a template, so you don't need to code nothing. For this project you will use an already existsting template. You can go on this [repository](https://github.com/emilbaehr/automatic-app-landing-page.git)
+### What You Have to Do
 
-## What you have to do
+First step, fork the repository to have the same repository on your account. Once you have forked the repository, make sure you have enabled GitHub Pages for this repository. To do this, go to the repository's settings, find "Pages" in the sidebar, and make sure it is enabled. Now GitHub will build and host your website without any problems.
 
-Firs step, fork the repository in order to have the same repository on your account. Once you have forked the repository make sure you have enabled github pages on this repo. So go in setting, in the lateral bar find Pages and make sure you have enabled. Now github will build and host will build and host your website without any problem.
+### Cool Features
 
-## Cool feature
+Clone the repository and open it with your preferred text editor. The most interesting thing is that if you paste your iOS app ID into the `_config.yaml` file, it will automatically grab the name, icon, price, and other information. If this doesn't work, you can modify the appearance in the `_config.yaml` file. In case you want to add your privacy and policy terms or your changelog, there are two markdown files in the `_pages` folder that you can modify.
 
-Clone the repo and open it with your preferred text editor. The most interesting thing is that if you paste into the _config.yaml page your ios_app_id it grabs automatically the name, the icon, the price and other stuff. If this doesn't work you can modify the aspect from the _config.yaml. In case you want to add your privacy and policy terms or your changelog, there are two markdown files in the _pages folder that you can modify.
+---
+
+By following these steps, you can create a simple website for your app. Leverage the power of GitHub Pages and Jekyll to quickly generate a static website without coding everything from scratch. Customize the content according to your needs and provide your users with important information, such as privacy policies and changelogs.
+
+GitHub Pages takes care of hosting and building your website, allowing you to focus on delivering the content you want to showcase. Take advantage of this opportunity to create a dedicated space for your app and enhance the user experience.
+
 
 

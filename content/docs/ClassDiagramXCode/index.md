@@ -6,11 +6,11 @@ description: "Automatically generate beautifull graphs of your code"
 slug: "ClassDiagram"
 
 ---
-## Visualize Your Code with Class Diagrams
+## Visualize Your Code with Class Diagrams
 
 Visualizing your code in the form of class diagrams can be incredibly useful, especially when you need to present a simplified version of your code to others. Class diagrams provide a graphical representation of the structure and relationships within your codebase, making it easier to understand and communicate complex code designs. In this article, we'll explore how you can automate the process of generating class diagrams using a simple script.
 
-## What is a Class Diagram?
+## What is a Class Diagram?
 
 A class diagram is a type of Unified Modeling Language (UML) diagram that represents the structure of a system or software application. It focuses on the classes, their attributes, and the relationships between them. Class diagrams are widely used in software development to visualize the static structure of code, making it easier to comprehend the overall architecture and design.
 

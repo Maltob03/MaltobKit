@@ -2934,8 +2934,8 @@ body:has(#menu-controller:checked) {
 
 .single_hero_basic {
   background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center;
+  background-size: contain;
+  background-position:left;
 }
 
 .single_hero_round {

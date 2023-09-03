@@ -130,6 +130,9 @@ After all permutations have been processed, the function adds a line connecting 
 
 The time complexity of the shortestPath function is O(n!), where n is the number of cities. This is because the function generates all possible permutations of the cities, which grows as n!, and for each permutation, it computes the total distance of the path, which takes O(n) time using the totalDistance function.
 
+
+
+
 The space complexity of the function is also O(n!), as it generates all possible permutations of the cities and stores them in memory. Additionally, it uses O(n) space to store the current shortest path and distance seen so far.
 
 ![image](https://miro.medium.com/v2/resize:fit:1400/1*5ZLci3SuR0zM_QlZOADv8Q.jpeg)

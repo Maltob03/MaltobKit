@@ -12,6 +12,8 @@ slug: "TSP"
 
 The Traveling Salesman Problem (TSP) is a well-known optimization problem in computer science and mathematics. It asks the question: given a list of cities and the distances between them, what is the shortest possible route that visits each city exactly once and returns to the starting city?
 
+
+
 The TSP is an NP-hard problem, which means that it is computationally difficult to solve for large instances of the problem. Despite this, it is an important problem with many practical applications, such as optimizing delivery routes for logistics companies or minimizing travel time for salespeople.
 
 There are many different algorithms that have been developed to solve the TSP, including exact algorithms that guarantee an optimal solution, as well as heuristic algorithms that provide approximate solutions quickly but may not be optimal. Some of the most well-known algorithms for the TSP include the brute-force algorithm, the nearest neighbor algorithm, and the 2-opt algorithm. In this repo you can find an example of brute-force algorithm.
@@ -121,7 +123,7 @@ For each permutation, the function computes the total distance of the path that 
 
 The function keeps track of the shortest path and its distance seen so far by initializing two variables, shortestPath and shortestDistance, to nil. For each permutation, if the computed distance is shorter than the current shortest distance, the function updates the shortest path and its distance.
 
-After all permutations have been processed, the function adds a line connecting the last city to the first city to complete the shortest path, and returns the shortest path and its distance as a tuple
+After all permutations have been processed, the function adds a line connecting the last city to the first city to complete the shortest path, and returns the shortest path and its distance as a tuple.
 
 
 ## Complexity
